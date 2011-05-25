@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block title %}
+Elpis-New
+{% endblock %}
+{% block content %}
+<form action={{ url_for('add_entry') }} method=post>
+    <dl>
+        <dt>Text (BBCode supported):
+        <dd><textarea name=text rows=15 cols=70></textarea>
+        <dt>Name:
+        <dd><input type=text name=author>
+        <dt>Mail:
+        <dd><input type=text name=mail>
+        <dd><input type=submit value=Submit>
+    </dl>
+</form>
+{% endblock %}

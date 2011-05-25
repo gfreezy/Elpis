@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta charset=utf-8>
+        <link rel=stylesheet href="{{ url_for('static', filename='style.css') }}" type=text/css>
+    </head>
+    <body>
+        <header>
+        <h1>Impressive Elpis</h1>
+        <nav>
+        <ul>
+            <li><a href="{{ url_for('show_entries') }}" class="{{ 'selected' if g.nav_home else '' }}">Home</a></li>
+            <li><a href="{{ url_for('add_entry') }}" class="{{ 'selected' if not g.nav_home else '' }}">Add to list</a></li>
+        </ul>
+        <div class=clear></div>
+        </nav>
+        </header>
+        <div id=content>
+            {% block content %}
+            {% endblock %}
+        </div>
+        <footer>
+        Copyright@Elpis
+        </footer>
+    </body>
+</html>
