@@ -1,26 +1,20 @@
-# all the imports
-from contextlib import closing
 import time
 import sqlite3
-from flask import Flask, request, g, redirect, url_for, \
-    render_template
-from flaskext import gravatar
-from postmarkup import render_bbcode
+import config
 
-# configuration
-DATABASE = 'elpis.db'
-DEBUG = True
-SECRET_KEY = 'development key'
-USERNAME = 'admin'
-PASSWORD = 'default'
+from contextlib import closing
+from flask import Flask, g
+from flaskext import gravatar
 
 # create our little application :)
 app = Flask(__name__)
-app.config.from_object(__name__)
+app.config.from_object(config)
+ 
+from elpis.views.frontend import frontend
+app.register_module(frontend)
 
 gravatar = gravatar.Gravatar(app, size=100, rating='g', default='retro',
         force_default=False, force_lower=False)
-
 
 @app.template_filter()
 def format_time(t):
@@ -64,29 +58,6 @@ def after_request(response):
     g.db.close()
     return response
 
-@app.route('/')
-def show_entries():
-    g.nav_home = True
-    cur = g.db.execute('select id, text, author, mail, time from entries order by id desc')
-    entries = [dict(id=row[0], text=row[1], author=row[2], mail=row[3], time=row[4]) for row in cur.fetchall()]
-    return render_template('show_entries.html', entries=entries)
-
-@app.route('/add', methods=['POST', 'GET'])
-def add_entry():
-    g.nav_home = False
-    if request.method == 'POST':
-        g.db.execute('insert into entries (text, author, mail, time) values (?, ?, ?, ?)',
-                    [render_bbcode(request.form['text'], "UTF-8"), request.form['author'], request.form['mail'], time.time()])
-        g.db.commit()
-        return redirect(url_for('show_entries'))
-    else:
-        return render_template('add_entry.html')
-
-@app.route('/delete/<id>')
-def del_entry(id):
-    g.db.execute('delete from entries where id=?', id)
-    g.db.commit()
-    return redirect(url_for('show_entries'))
 
 if __name__ == '__main__':
     #init_db()
