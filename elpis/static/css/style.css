@@ -3,17 +3,18 @@
 /*}*/
 
 nav, ul, li, div, h1, h2, p, span, fieldset,
-header, section, nav, footer, figure, figcaption, address {
+header, section, nav, footer, figure, figcaption, 
+address {
     margin: 0;
     padding: 0;
     border: 0;
 }
 
 body {
-    /*width: 960px;*/
+    width: 960px;
     margin-left: auto;
     margin-right: auto;
-    background: #F5FEFB;
+    /*background: #F5FEFB;*/
 }
 
 body>header>h1 {
@@ -42,12 +43,13 @@ body>header>nav>ul>li:last-child {
     margin-right: -6em;
     width: 6em;
     top: 5em;
-    right: 1em;
+    right: 1.2em;
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
 }
 
 body>header>nav>ul>li:last-child>a {
+    font: italic 1.3em sans-serif;
     padding-top: 8px;
     padding-bottom: 1px;
     border-bottom: none;
@@ -55,12 +57,11 @@ body>header>nav>ul>li:last-child>a {
 }
 
 li>a:link, li>a:visited {
-
     display: block;
     border: 1px solid #eee;
     padding-top: 4px;
     padding-bottom: 4px;
-    font: bold 1.5em sans;
+    font: bold 1.5em sans-serif;
     color: black;
     text-decoration: none;
     background-color: #eee;
@@ -160,8 +161,25 @@ article>footer>p:last-child>a:active {
 
 #add_entry {
     border: 1px solid #eee;
-    padding: 30px;
-    background: url("../pict/geili.jpg") no-repeat right;
+    padding: 10px;
+}
+
+#add_entry>div:first-child {
+    margin: 10px;
+    margin-top: 70px;
+    float: left;
+    width: 400px;
+    height: 300px;
+    background: url("../pict/geili3.jpg") no-repeat -4em;
+    border: 1px solid;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+
+#add_entry form {
+    margin-left: 430px;
 }
 
 #add_entry fieldset {

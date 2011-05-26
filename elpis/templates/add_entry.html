@@ -4,20 +4,21 @@ Elpis-New
 {% endblock %}
 {% block content %}
 <div id=add_entry>
-<form action={{ url_for('add_entry') }} method=post>
-    <fieldset>
-        <label for=text>Text (BBCode supported)</label>
-        <textarea name=text class=":required"></textarea>
-    </fieldset>
-    <fieldset>
-        <label for=author>Name</label>
-        <input type=text name=author class=":required">
-    </fieldset>
-    <fieldset>
-        <label for=mail>Mail</label>
-        <input type=text name=mail class=":required :email">
-    </fieldset>
-    <input type=submit value=Submit class=submit>
-</form>
+    <div></div>
+    <form action={{ url_for('add_entry') }} method=post>
+        <fieldset>
+            <label for=text>Text (BBCode supported)</label>
+            <textarea name=text class=":required"></textarea>
+        </fieldset>
+        <fieldset>
+            <label for=author>Name</label>
+            <input type=text name=author class=":required">
+        </fieldset>
+        <fieldset>
+            <label for=mail>Mail</label>
+            <input type=text name=mail class=":required :email">
+        </fieldset>
+        <input type=submit value=Submit class=submit>
+    </form>
 </div>
 {% endblock %}
