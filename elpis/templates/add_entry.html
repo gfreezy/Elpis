@@ -3,15 +3,21 @@
 Elpis-New
 {% endblock %}
 {% block content %}
+<div id=add_entry>
 <form action={{ url_for('add_entry') }} method=post>
-    <dl>
-        <dt>Text (BBCode supported):
-        <dd><textarea name=text rows=15 cols=70></textarea>
-        <dt>Name:
-        <dd><input type=text name=author>
-        <dt>Mail:
-        <dd><input type=text name=mail>
-        <dd><input type=submit value=Submit>
-    </dl>
+    <fieldset>
+        <label for=text>Text (BBCode supported)</label>
+        <textarea name=text class=":required"></textarea>
+    </fieldset>
+    <fieldset>
+        <label for=author>Name</label>
+        <input type=text name=author class=":required">
+    </fieldset>
+    <fieldset>
+        <label for=mail>Mail</label>
+        <input type=text name=mail class=":required :email">
+    </fieldset>
+    <input type=submit value=Submit class=submit>
 </form>
+</div>
 {% endblock %}

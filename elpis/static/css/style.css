@@ -1,0 +1,201 @@
+/** {*/
+    /*border: 1px solid black;*/
+/*}*/
+
+nav, ul, li, div, h1, h2, p, span, fieldset,
+header, section, nav, footer, figure, figcaption, address {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body {
+    /*width: 960px;*/
+    margin-left: auto;
+    margin-right: auto;
+    background: #F5FEFB;
+}
+
+body>header>h1 {
+    margin: 2px 0;
+    padding: 1px 0;
+    text-transform: uppercase;
+}
+
+body>header>nav>ul {
+    float: right;
+    margin: 2px 10px 0 2px;
+    padding: 2px 2px 0 2px;
+}
+
+body>header>nav>ul>li {
+    display: block;
+    float: left;
+    list-style: none;
+    margin-left: 2px;
+    text-align: center;
+    width: 10em;
+}
+
+body>header>nav>ul>li:last-child {
+    position: relative;
+    margin-right: -6em;
+    width: 6em;
+    top: 5em;
+    right: 1em;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+}
+
+body>header>nav>ul>li:last-child>a {
+    padding-top: 8px;
+    padding-bottom: 1px;
+    border-bottom: none;
+    background-color: transparent;
+}
+
+li>a:link, li>a:visited {
+
+    display: block;
+    border: 1px solid #eee;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font: bold 1.5em sans;
+    color: black;
+    text-decoration: none;
+    background-color: #eee;
+    border-radius-topleft: 5px;
+    -webkit-border-radius-topleft: 5px;
+    -moz-border-radius-topleft: 5px;
+    border-radius-topright: 5px;
+    -webkit-border-radius-topright: 5px;
+    -moz-border-radius-topright: 5px;
+}
+
+li>a.selected:link, li>a.selected:visited {
+    padding-top: 8px;
+    padding-bottom: 1px;
+    border-bottom: none;
+    background-color: transparent;
+}
+
+li>a:hover, li>a:active {
+    padding-top: 8px;
+    padding-bottom: 1px;
+    border-bottom: none;
+    background-color: transparent;
+}
+
+body>footer {
+    float: right;
+    display: inline;
+    padding: 2px;
+    border: 1px solid #eee;
+    border-top: none;
+}
+
+/*#content {*/
+    /*padding: 2px;*/
+/*}*/
+
+#content>article {
+    padding: 2px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+}
+
+#content>article a:link {
+    text-decoration: none;
+}
+
+#content>article a:hover {
+    text-decoration: underline;
+}
+
+article>section:first-child {
+    float: left;
+    margin: 4px;
+}
+
+article>section:nth-child(2) {
+    float: right;
+    width: 830px;
+    margin: 2px;
+}
+
+article>footer {
+    float: right;
+    width: 830px;
+    margin: 2px;
+}
+
+article>footer>p:first-child {
+    font: 0.6em sans-serif;
+    padding: 2px 0;
+}
+
+article>footer>p:first-child>span {
+    padding: 3px 0 3px 30px;
+    width: 100px;
+    background: transparent url("../pict/mail.gif") no-repeat scroll left;
+}
+
+article>footer>p:last-child>a:link,
+article>footer>p:last-child>a:visited,
+article>footer>p:last-child>a:hover,
+article>footer>p:last-child>a:active {
+    font: bold 0.7em sans-serif;
+    color: black;
+}
+
+.group:after {
+    content: '.';
+    clear: both;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+#add_entry {
+    border: 1px solid #eee;
+    padding: 30px;
+    background: url("../pict/geili.jpg") no-repeat right;
+}
+
+#add_entry fieldset {
+    margin: 0 0 15px 0;
+}
+
+#add_entry fieldset label {
+    display: block;
+    margin: 0 0 2px 0;
+    font: bold 1.1em sans-serif;
+}
+
+#add_entry fieldset input,
+#add_entry fieldset textarea {
+    width: 500px;
+    padding: 5px;
+    border: 1px solid gray;
+    font-size: 1.3em;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+#add_entry fieldset textarea {
+    height: 200px;
+}
+
+#add_entry fieldset input:focus,
+#add_entry fieldset textarea:focus {
+    background: #eee;
+}
+
+#add_entry input[type=submit] {
+    font: bold 1.1em sans-serif;
+    width: 130px;
+    height: 2.4em;
+}

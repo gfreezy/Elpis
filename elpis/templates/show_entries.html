@@ -4,7 +4,7 @@ Elpis
 {% endblock %}
 {% block content %}
 {% for entry in entries %}            
-<article>
+<article class=group>
 <section>
 <img src="{{ entry.mail|gravatar }}">
 </section>
@@ -14,10 +14,19 @@ Elpis
 </span>
 </section>
 <footer>
-<p>submitted {{ entry.time|format_time }} by <a href={{entry.mail}}>{{ entry.author }}</a></p>
-<span><a href="#">356 comments</a>&nbsp&nbsp&nbsp&nbsp<a href="#">share</a></span>
+<p>submitted {{ entry.time|format_time }} by 
+<span>
+    <a href=mailto:{{entry.mail}}>
+        <em>{{ entry.author }}</em>
+    </a>
+</span>
+</p>
+<p>
+<a href="#">like</a>
+<a href="#">share</a>
+<a href="{{ url_for('del_entry', id=entry.id) }}">delete</a>
+</p>
 </footer>
-<div class=clear></div>
 </article>
 {% endfor %}
 {% endblock %}

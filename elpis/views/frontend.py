@@ -14,18 +14,25 @@ def show_entries():
 
 @frontend.route('/add', methods=['POST', 'GET'])
 def add_entry():
-    g.nav_home = False
     if request.method == 'POST':
         g.db.execute('insert into entries (text, author, mail, time) values (?, ?, ?, ?)',
-                    [render_bbcode(request.form['text'], "UTF-8"), request.form['author'], request.form['mail'], time.time()])
+                    (render_bbcode(request.form['text'], "UTF-8"), request.form['author'], request.form['mail'], time.time()))
         g.db.commit()
         return redirect(url_for('show_entries'))
     else:
+        g.nav_home = False
         return render_template('add_entry.html')
 
-@frontend.route('/delete/<id>')
+@frontend.route('/del/<id>')
 def del_entry(id):
-    g.db.execute('delete from entries where id=?', id)
+    g.db.execute('delete from entries where id = ?', (id,))
     g.db.commit()
     return redirect(url_for('show_entries'))
+
+@frontend.route('/comments/<id>', methods=['POST', 'GET'])
+def comment(id):
+    if request.method == 'POST':
+        pass
+    else:
+        pass
 
