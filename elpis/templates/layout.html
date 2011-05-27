@@ -12,9 +12,9 @@
         <h1>Impressive Elpis</h1>
         <nav class=group>
         <ul>
-            <li><a href="{{ url_for('show_entries') }}" class="{{ 'selected' if g.nav_home else '' }}">Home</a></li>
-            <li><a href="{{ url_for('add_entry') }}" class="{{ 'selected' if not g.nav_home else '' }}">Add to list</a></li>
-            <li><a href="{{ url_for('add_entry') }}">About</a></li>
+            <li><a href="{{ url_for('show_entries') }}" class="{{ 'selected' if g.nav.get('home') else '' }}">Home</a></li>
+            <li><a href="{{ url_for('add_entry') }}" class="{{ 'selected' if g.nav.get('add') else '' }}">Add</a></li>
+            <li><a href="{{ url_for('about') }}" class="{{ 'selected' if g.nav.get('about') else '' }}">About</a></li>
         </ul>
         </nav>
         </header>

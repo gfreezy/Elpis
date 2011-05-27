@@ -22,8 +22,8 @@ Elpis
 </span>
 </p>
 <p>
-<a href="#">like</a>
-<a href="#">share</a>
+<a href="{{ url_for('view', id=entry.id) }}">{{ entry.comments_num }} comments</a>&nbsp
+<a href="#">share</a>&nbsp
 <a href="{{ url_for('del_entry', id=entry.id) }}">delete</a>
 </p>
 </footer>

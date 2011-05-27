@@ -4,5 +4,15 @@ create table entries (
     text text not null,
     author text not null,
     mail text not null,
+    time integer not null,
+    comments_num integer not null
+);
+drop table if exists comments;
+create table comments (
+    id integer primary key autoincrement,
+    text text not null,
+    post_id integer not null,
+    author text not null,
+    mail text not null,
     time integer not null
 );

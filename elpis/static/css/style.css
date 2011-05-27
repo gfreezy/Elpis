@@ -31,6 +31,7 @@ body>header>nav>ul {
 
 body>header>nav>ul>li {
     display: block;
+    /*text-transform: uppercase;*/
     float: left;
     list-style: none;
     margin-left: 2px;
@@ -50,15 +51,15 @@ body>header>nav>ul>li:last-child {
 
 body>header>nav>ul>li:last-child>a {
     font: italic 1.3em sans-serif;
-    padding-top: 8px;
-    padding-bottom: 1px;
-    border-bottom: none;
-    background-color: transparent;
+    /*padding-top: 8px;*/
+    /*padding-bottom: 1px;*/
+    /*background-color: transparent;*/
 }
 
 li>a:link, li>a:visited {
     display: block;
     border: 1px solid #eee;
+    border-bottom: none;
     padding-top: 4px;
     padding-bottom: 4px;
     font: bold 1.5em sans-serif;
@@ -75,14 +76,14 @@ li>a:link, li>a:visited {
 
 li>a.selected:link, li>a.selected:visited {
     padding-top: 8px;
-    padding-bottom: 1px;
+    padding-bottom: 0;
     border-bottom: none;
     background-color: transparent;
 }
 
 li>a:hover, li>a:active {
     padding-top: 8px;
-    padding-bottom: 1px;
+    padding-bottom: 0;
     border-bottom: none;
     background-color: transparent;
 }
@@ -91,25 +92,23 @@ body>footer {
     float: right;
     display: inline;
     padding: 2px;
-    border: 1px solid #eee;
-    border-top: none;
 }
 
-/*#content {*/
-    /*padding: 2px;*/
-/*}*/
+#content {
+    min-height: 400px;
+}
 
-#content>article {
+article {
     padding: 2px;
     margin-bottom: 10px;
     border: 1px solid #eee;
 }
 
-#content>article a:link {
+article a:link {
     text-decoration: none;
 }
 
-#content>article a:hover {
+article a:hover {
     text-decoration: underline;
 }
 
@@ -120,6 +119,7 @@ article>section:first-child {
 
 article>section:nth-child(2) {
     float: right;
+    font: normal 1em sans-serif;
     width: 830px;
     margin: 2px;
 }
@@ -149,6 +149,20 @@ article>footer>p:last-child>a:active {
     color: black;
 }
 
+article>section:last-child {
+    float: left;
+    margin: 25px 10px 0 40px;
+}
+
+article article>section:nth-child(2) {
+    width: 770px;
+    font: normal 0.9em sans-serif;
+}
+
+article article>footer {
+    width: 770px;
+}
+
 .group:after {
     content: '.';
     clear: both;
@@ -171,24 +185,23 @@ article>footer>p:last-child>a:active {
     width: 400px;
     height: 300px;
     background: url("../pict/geili3.jpg") no-repeat -4em;
-    border: 1px solid;
+    border: 1px solid #eee;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
 }
-
 
 #add_entry form {
     margin-left: 430px;
 }
 
 #add_entry fieldset {
-    margin: 0 0 15px 0;
+    margin-bottom:15px;
 }
 
 #add_entry fieldset label {
     display: block;
-    margin: 0 0 2px 0;
+    margin-bottom:2px;
     font: bold 1.1em sans-serif;
 }
 
@@ -197,13 +210,13 @@ article>footer>p:last-child>a:active {
     width: 500px;
     padding: 5px;
     border: 1px solid gray;
-    font-size: 1.3em;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
 }
 
 #add_entry fieldset textarea {
+    font: normal 1em sans-serif;
     height: 200px;
 }
 
@@ -216,4 +229,62 @@ article>footer>p:last-child>a:active {
     font: bold 1.1em sans-serif;
     width: 130px;
     height: 2.4em;
+}
+
+#add_comment {
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+#add_comment div {
+    float: right;
+    width: 400px;
+    height: 300px;
+    margin: 40px 30px 0 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    background: url("../pict/geili.jpg") no-repeat -4em;
+}
+
+#add_comment fieldset {
+    margin: 0 0 5px 0;
+}
+
+#add_comment fieldset label {
+    display: block;
+    margin: 0 0 2px 0;
+    /*font: bold 1em sans-serif;*/
+}
+
+#add_comment fieldset input,
+#add_comment fieldset textarea {
+    width: 450px;
+    padding: 5px;
+    border: 1px solid gray;
+    font: normal 1em sans-serif;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+#add_comment fieldset textarea {
+    height: 200px;
+}
+
+#add_comment fieldset input:focus,
+#add_comment fieldset textarea:focus {
+    background: #eee;
+}
+
+#add_comment input[type=submit] {
+    /*font: normal 1em sans-serif;*/
+    width: 130px;
+    height: 2em;
+}
+
+#about {
+    text-align: center;
+    min-height: 400px;
 }
