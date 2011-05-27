@@ -756,7 +756,7 @@ class PyFetion(SIPC):
     _sipc_proxy  = ''
     _domain = ''
     _http_tunnel = ''
-    
+
     mobile_no = ''
     passwd = ''
     queue = Queue()
