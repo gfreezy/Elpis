@@ -1,2 +1,3 @@
 #!/bin/sh
+ln -s elpis/static static
 crontab mylittlecrontab
