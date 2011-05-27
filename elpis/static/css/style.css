@@ -4,7 +4,7 @@
 
 nav, ul, li, div, h1, h2, p, span, fieldset,
 header, section, nav, footer, figure, figcaption, 
-address {
+address, table, tr, td {
     margin: 0;
     padding: 0;
     border: 0;
@@ -240,7 +240,7 @@ article article>footer {
     float: right;
     width: 400px;
     height: 300px;
-    margin: 40px 30px 0 20px;
+    margin: 20px 30px 0 20px;
     border: 1px solid #eee;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -288,3 +288,5 @@ article article>footer {
     text-align: center;
     min-height: 400px;
 }
+
+

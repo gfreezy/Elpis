@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+{% block title %}
+Elpis-Receivers
+{% endblock %}
+{% block content %}
+{% for receiver in receivers %}
+<article class=group>
+<section>
+<img src={{ receiver.mail|gravatar }}>
+</section>
+
+<section>
+<table>
+    <tr>
+        <td><b>E-Mail:</b></td>
+        <td><em>{{ receiver.mail }}</em></td>
+    </tr>
+    <tr>
+        <td><b>Phone:</b></td>
+        <td><em>{{ receiver.phone[:3] +'****' + receiver.phone[7:] }}</em></td>
+    </tr>
+</table>
+</section>
+<footer>
+<p>submitted {{receiver.time|format_time }}</p>
+<p><a href="#">Delete</a></p>
+</footer>
+</article>
+{% endfor %}
+
+<div id=add_comment>
+    <form action="{{ url_for('receivers') }}" method=POST>
+        <fieldset>
+            <label for=mail>Mail</label>
+            <input type=text name=mail class=":required :email">
+        </fieldset>
+        <fieldset>
+            <label for=phone>Phone Number</label>
+            <input type=text name=phone class=":required :number">
+        </fieldset>
+        <input type=submit value=Submit class=submit>
+    </form>
+</div>
+{% endblock %}

@@ -14,6 +14,7 @@
         <ul>
             <li><a href="{{ url_for('show_entries') }}" class="{{ 'selected' if g.nav.get('home') else '' }}">Home</a></li>
             <li><a href="{{ url_for('add_entry') }}" class="{{ 'selected' if g.nav.get('add') else '' }}">Add</a></li>
+            <li><a href="{{ url_for('receivers') }}" class="{{ 'selected' if g.nav.get('receivers') else '' }}">Receivers</a></li>
             <li><a href="{{ url_for('about') }}" class="{{ 'selected' if g.nav.get('about') else '' }}">About</a></li>
         </ul>
         </nav>

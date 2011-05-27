@@ -8,7 +8,7 @@ frontend = Module(__name__)
 
 def current_page(current):
     g.nav = dict()
-    g.nav['home'] = g.nav['add'] = g.nav['view'] = False
+    g.nav['home'] = g.nav['add'] = g.nav['view'] = g.nav['receivers'] = False
     g.nav[current] = True
 
 @frontend.route('/')
@@ -49,10 +49,9 @@ def view(id):
     cur = g.db.execute('select id, text, author, mail, time from entries where id = ?', (id,))
     r = cur.fetchone()
     entry = dict((key, r[i]) for (i, key) in enumerate(('id', 'text', 'author', 'mail', 'time')))
-    cur.close()
 
     cur = g.db.execute('select id, text, author, mail, time from comments where post_id = ?', (id,))
-    comments = [dict(id=row[0], text=row[1], author=row[2], mail=row[3], time=row[4]) for row in cur.fetchall()]
+    comments = (dict(id=row[0], text=row[1], author=row[2], mail=row[3], time=row[4]) for row in cur.fetchall())
     return render_template('view.html', entry=entry, comments=comments)
 
 @frontend.route('/del_comment/<post_id>/<id>')
@@ -66,3 +65,16 @@ def del_comment(post_id, id):
 def about():
     current_page('about')
     return render_template('about.html')
+
+#@frontend.route('/receivers/<action>/<id>', methods=['POST', 'GET'])
+@frontend.route('/receivers/', methods=['POST', 'GET'])
+def receivers():
+    current_page('receivers')
+    if request.method == 'POST':
+        g.db.execute('insert into receivers (mail, phone, time) values (?, ?, ?)',
+                    (request.form['mail'], request.form['phone'], time.time()))
+        g.db.commit()
+    cur = g.db.execute('select * from receivers')
+    receivers = (dict(id=row[0], mail=row[1], phone=row[2], time=row[3]) for row in cur.fetchall())
+
+    return render_template('receivers.html', receivers=receivers)

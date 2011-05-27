@@ -16,3 +16,11 @@ create table comments (
     mail text not null,
     time integer not null
 );
+
+drop table if exists receivers;
+create table receivers (
+    id integer primary key autoincrement,
+    mail text not null,
+    phone text not null,
+    time integer not null
+);
