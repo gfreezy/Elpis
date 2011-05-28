@@ -23,7 +23,7 @@ Elpis-Receivers
 </section>
 <footer>
 <p>submitted {{receiver.time|format_time }}</p>
-<p><a href="#">Delete</a></p>
+<p><a href="{{ url_for('del_receiver', id=receiver.id) }}">Delete</a></p>
 </footer>
 </article>
 {% endfor %}

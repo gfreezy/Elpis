@@ -10,7 +10,7 @@ Elpis
 </section>
 <section>
 <span>
-    {{ entry.text|safe }}
+    {{ entry.content|safe }}
 </span>
 </section>
 <footer>
@@ -22,7 +22,7 @@ Elpis
 </span>
 </p>
 <p>
-<a href="{{ url_for('view', id=entry.id) }}">{{ entry.comments_num }} comments</a>&nbsp
+<a href="{{ url_for('view', id=entry.id) }}">{{ entry.comments_count }} comments</a>&nbsp
 <a href="#">share</a>&nbsp
 <a href="{{ url_for('del_entry', id=entry.id) }}">delete</a>
 </p>

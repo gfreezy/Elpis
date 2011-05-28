@@ -1,6 +1,10 @@
 #!/usr/bin/env python2
-from elpis import app
-#from elpis import init_db
+#import sys
+#sys.path.append(sys.path[0])
 
-#init_db()
+#print sys.path
+
+from elpis import app, db
+
+#db.create_all()
 app.run(debug=True)
