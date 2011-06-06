@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+import mailer
+
 from flask import Module, g, render_template, request, redirect, url_for
 from postmarkup import render_bbcode
-from flaskext.mail import Message
-from elpis import mail, db, Entry, Comment, Receiver
+from elpis import db
+from elpis.model import Entry, Comment, Receiver
+from elpis import tasks
 
 frontend = Module(__name__)
 
@@ -19,13 +22,15 @@ def request_deletion(entity_type, id, entry_id=None):
     else:
         return
 
-    msg = Message('Confirm: Do you want to delete the %s?' % entity_type)
-    msg.recipients = [entity.mail]
-    msg.html = \
+    msg = mailer.Message()
+    msg.From = 'gfreezy@163.com'
+    msg.To = entity.mail
+    msg.Subject = 'Confirm: Do you want to delete the %s?' % entity_type
+    msg.Html = \
     """<h1>If you want to delete the %s, Click the link below</h1>
     <a href="%s">%s</a>
     """ % (entity_type, url, url)
-    mail.send(msg)
+    tasks.send_mail.delay(msg)
 
 def current_page(current):
     g.nav = dict()
@@ -36,7 +41,7 @@ def current_page(current):
 @frontend.route('/view/')
 def show_entries():
     current_page('home')
-    entries = Entry.query.all()
+    entries = Entry.query.order_by('id desc').all()
     return render_template('show_entries.html', entries=entries)
 
 @frontend.route('/add/', methods=['POST', 'GET'])
@@ -58,7 +63,8 @@ def add_entry():
 @frontend.route('/del_entry/<id>/<token>')
 def del_entry(id, token=None):
     if token is None:
-        request_deletion('entry', id)
+        request_deletion(entity_type='entry', id=id)
+        return 'check your mail'
     else:
         entry = Entry.query.filter_by(id=id, token=token).first()
         if entry is not None:
@@ -68,7 +74,7 @@ def del_entry(id, token=None):
             for comment in comments:
                 db.session.delete(comment)
             db.session.commit()
-    return redirect(url_for('show_entries'))
+        return redirect(url_for('show_entries'))
 
 @frontend.route('/view/<id>/', methods=['POST', 'GET'])
 def view(id):
@@ -95,16 +101,18 @@ def view(id):
 @frontend.route('/del_comment/<entry_id>/<id>/<token>/')
 def del_comment(entry_id=None, id=None, token=None):
     if token is None:
-        request_deletion('comment', id, entry_id=entry_id)
+        request_deletion(entity_type='comment', id=id, entry_id=entry_id)
+        return 'check your mail'
     else:
         comment = Comment.query.filter_by(id=id, token=token).first()
-        entry = Entry.query.get(entry_id)
-        entry.comments_count -= 1
+        if not comment is None:
+            entry = Entry.query.get(entry_id)
+            entry.comments_count -= 1
 
-        db.session.add(entry)
-        db.session.delete(comment)
-        db.session.commit()
-    return redirect(url_for('view', id=id))
+            db.session.add(entry)
+            db.session.delete(comment)
+            db.session.commit()
+        return redirect(url_for('view', id=id))
 
 @frontend.route('/about/')
 def about():
@@ -122,17 +130,19 @@ def receivers():
         db.session.add(receiver)
         db.session.commit()
 
-    receivers = Receiver.query.all()
+    receivers = Receiver.query.order_by('id desc').all()
     return render_template('receivers.html', receivers=receivers)
 
 @frontend.route('/del_receiver/<id>/')
 @frontend.route('/del_receiver/<id>/<token>/')
 def del_receiver(id, token=None):
     if token is None:
-        request_deletion('receiver', id)
+        request_deletion(entity_type='receiver', id=id)
+        return 'check your mail'
     else:
         receiver = Receiver.query.filter_by(id=id, token=token).first()
-        db.session.delete(receiver)
-        db.session.commit()
-    return redirect(url_for('receivers'))
+        if not receiver is None:
+            db.session.delete(receiver)
+            db.session.commit()
+        return redirect(url_for('receivers'))
 

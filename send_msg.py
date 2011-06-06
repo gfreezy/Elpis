@@ -18,10 +18,10 @@ if __name__ == '__main__':
         print 'login success'
 
     db = connect_db()
-    cur = db.execute('select phone from receivers order by id desc')
+    cur = db.execute('select phone from receiver order by id desc')
     phone_list = list(u'%s' % num[0] for num in cur.fetchall())
 
-    cur = db.execute('select * from entries order by id desc')
+    cur = db.execute('select * from entry order by id desc')
     rlt = cur.fetchone()
     text = rlt[1]
 
