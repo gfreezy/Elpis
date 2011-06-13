@@ -5,7 +5,7 @@ from flask import Module, g, render_template, request, redirect, url_for
 from postmarkup import render_bbcode
 from elpis import db
 from elpis.model import Entry, Comment, Receiver
-from elpis import tasks
+from celery.execute import send_task
 
 frontend = Module(__name__)
 
@@ -30,7 +30,7 @@ def request_deletion(entity_type, id, entry_id=None):
     """<h1>If you want to delete the %s, Click the link below</h1>
     <a href="%s">%s</a>
     """ % (entity_type, url, url)
-    tasks.send_mail.delay(msg)
+    send_task("elpis.tasks.mail.send_mail",[msg,])
 
 def current_page(current):
     g.nav = dict()
@@ -129,6 +129,7 @@ def receivers():
 
         db.session.add(receiver)
         db.session.commit()
+        send_task("elpis.tasks.fetion.send_sms", [request.form['phone'], request.form['mail']])
 
     receivers = Receiver.query.order_by('id desc').all()
     return render_template('receivers.html', receivers=receivers)

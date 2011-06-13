@@ -8,4 +8,3 @@ CELERY_RESULT_DBURI = "sqlite:////tmp/celerydb.sqlite"
 #BROKER_USER = "root"
 #BROKER_PASSWORD = "lV>RIWwuJm]]YqD!%WiI"
 #CELERY_RESULT_BACKEND = "amqp"
-CELERY_IMPORTS = ("tasks", )

@@ -1,2 +1,0 @@
-16 14 * * * python2 /home/alex/src/Elpis/send_msg.py
-21 14 * * * /home/alex/src/Elpis/hello.py>/home/alex/log
