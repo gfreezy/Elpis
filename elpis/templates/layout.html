@@ -6,6 +6,18 @@
         <link rel=stylesheet href="{{ url_for('.static', filename='css/style.css') }}" type=text/css>
         <script type=text/javascript src="{{ url_for('.static', filename='js/jquery.min.js') }}"></script>
         <script type=text/javascript src="{{ url_for('.static', filename='js/vanadium-min.js') }}"></script>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(inform_mail);
+
+            function inform_mail() {
+                $('article footer p:last-child a:last-child').click(function(event) {
+                        $.get($(this).attr("href"), function(data) {
+                            alert(data);
+                        });
+                        event.preventDefault();
+                    });
+            }
+        </script>
     </head>
     <body>
         <header>

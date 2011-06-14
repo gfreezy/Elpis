@@ -20,7 +20,7 @@ def request_deletion(entity_type, id, entry_id=None):
         entity = Receiver.query.get(id)
         url = url_for('del_receiver', id=entity.id, token=entity.token, _external=True)
     else:
-        return
+        return 'Error'
 
     msg = mailer.Message()
     msg.From = 'gfreezy@163.com'
@@ -30,7 +30,9 @@ def request_deletion(entity_type, id, entry_id=None):
     """<h1>If you want to delete the %s, Click the link below</h1>
     <a href="%s">%s</a>
     """ % (entity_type, url, url)
-    send_task("elpis.tasks.mail.send_mail",[msg,])
+    send_task("tasks.mail.send_mail",[msg,])
+
+    return 'Check your mailbox "%s"' % entity.mail
 
 def current_page(current):
     g.nav = dict()
@@ -63,8 +65,7 @@ def add_entry():
 @frontend.route('/del_entry/<id>/<token>')
 def del_entry(id, token=None):
     if token is None:
-        request_deletion(entity_type='entry', id=id)
-        return 'check your mail'
+        return request_deletion(entity_type='entry', id=id)
     else:
         entry = Entry.query.filter_by(id=id, token=token).first()
         if entry is not None:
@@ -101,8 +102,7 @@ def view(id):
 @frontend.route('/del_comment/<entry_id>/<id>/<token>/')
 def del_comment(entry_id=None, id=None, token=None):
     if token is None:
-        request_deletion(entity_type='comment', id=id, entry_id=entry_id)
-        return 'check your mail'
+        return request_deletion(entity_type='comment', id=id, entry_id=entry_id)
     else:
         comment = Comment.query.filter_by(id=id, token=token).first()
         if not comment is None:
@@ -129,7 +129,7 @@ def receivers():
 
         db.session.add(receiver)
         db.session.commit()
-        send_task("elpis.tasks.fetion.send_sms", [request.form['phone'], request.form['mail']])
+        send_task("tasks.fetion.send_sms", [request.form['phone'], request.form['mail']])
 
     receivers = Receiver.query.order_by('id desc').all()
     return render_template('receivers.html', receivers=receivers)
@@ -138,8 +138,7 @@ def receivers():
 @frontend.route('/del_receiver/<id>/<token>/')
 def del_receiver(id, token=None):
     if token is None:
-        request_deletion(entity_type='receiver', id=id)
-        return 'check your mail'
+        return request_deletion(entity_type='receiver', id=id)
     else:
         receiver = Receiver.query.filter_by(id=id, token=token).first()
         if not receiver is None:
