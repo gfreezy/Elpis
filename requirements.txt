@@ -2,3 +2,4 @@ flask
 Flask-Gravatar
 postmarkup
 Flask-SQLAlchemy
+mailer
