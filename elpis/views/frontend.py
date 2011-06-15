@@ -129,7 +129,7 @@ def receivers():
 
         db.session.add(receiver)
         db.session.commit()
-        send_task("tasks.fetion.send_sms", [request.form['phone'], request.form['mail']])
+        send_task("tasks.fetion.add_contact", [request.form['phone']])
 
     receivers = Receiver.query.order_by('id desc').all()
     return render_template('receivers.html', receivers=receivers)
@@ -145,4 +145,15 @@ def del_receiver(id, token=None):
             db.session.delete(receiver)
             db.session.commit()
         return redirect(url_for('receivers'))
+
+
+#@frontend.route('/manage/')
+#@frontend.route('/manage/<user>/<passwd>')
+#def manage(user=None, passwd=None):
+    #if user == 'admin' and passwd == 'admin':
+        #receivers = Receiver.query.order_by('id desc').all()
+        #return render_template('manage.html', receivers=receivers)
+    #else:
+        #return 'username and password needed'
+
 
