@@ -3,3 +3,4 @@ Flask-Gravatar
 postmarkup
 Flask-SQLAlchemy
 mailer
+celery
