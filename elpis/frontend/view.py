@@ -3,11 +3,11 @@ import mailer
 
 from flask import Module, g, render_template, request, redirect, url_for
 from postmarkup import render_bbcode
-from elpis.model import db, Entry, Comment, Receiver
+from elpis.models import db, Entry, Comment, Receiver
 from celery.execute import send_task
 
 
-frontend = Module(__name__)
+frontend = Module(__name__, 'frontend', static_path='/frontend/static')
 
 
 def request_deletion(entity_type, id, entry_id=None):
@@ -22,7 +22,6 @@ def request_deletion(entity_type, id, entry_id=None):
         url = url_for('del_receiver', id=entity.id, token=entity.token, _external=True)
     else:
         return 'Error'
-
 
     msg = mailer.Message(charset='utf-8')
     msg.From = 'gfreezy@163.com'
@@ -70,10 +69,10 @@ def current_page(current):
 def show_entries():
     current_page('home')
     entries = Entry.query.order_by('id desc').all()
-    return render_template('show_entries.html', entries=entries)
+    return render_template('frontend/show_entries.html', entries=entries)
 
 
-@frontend.route('/add/', methods=['POST', 'GET'])
+@frontend.route('/add/', methods=('POST', 'GET'))
 def add_entry():
     if request.method == 'POST':
         entry = Entry(
@@ -86,7 +85,7 @@ def add_entry():
         return redirect(url_for('show_entries'))
     else:
         current_page('add')
-        return render_template('add_entry.html')
+        return render_template('frontend/add_entry.html')
 
 
 @frontend.route('/del_entry/<id>/')
@@ -126,7 +125,7 @@ def view(id):
 
     entry = Entry.query.get(id)
     comments = Comment.query.filter_by(entry_id=id)
-    return render_template('view.html', entry=entry, comments=comments)
+    return render_template('frontend/view.html', entry=entry, comments=comments)
 
 
 @frontend.route('/del_comment/<entry_id>/<id>/')
@@ -149,7 +148,7 @@ def del_comment(entry_id=None, id=None, token=None):
 @frontend.route('/about/')
 def about():
     current_page('about')
-    return render_template('about.html')
+    return render_template('frontend/about.html')
 
 
 @frontend.route('/receivers/', methods=['POST', 'GET'])
@@ -165,7 +164,7 @@ def receivers():
         send_task("tasks.fetion.add_contact", [request.form['phone']])
 
     receivers = Receiver.query.order_by('id desc').all()
-    return render_template('receivers.html', receivers=receivers)
+    return render_template('frontend/receivers.html', receivers=receivers)
 
 
 @frontend.route('/del_receiver/<id>/')

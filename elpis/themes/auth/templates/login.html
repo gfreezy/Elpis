@@ -1,0 +1,18 @@
+{% extends theme("admin/extra_base.html") %}
+
+{% block left_nav %}
+{% endblock left_nav %}
+
+{% block main %}
+    <form method="POST" action="">
+      <div>
+        <label for="username">username</label>
+        <input id="username" name="username" type="text" value="">
+      </div>
+      <div>
+        <label for="password">password</label>
+        <input id="passsword" name="password" type="password" value="">
+      </div>
+      <input type="submit"/>
+    </form>
+{% endblock main %}

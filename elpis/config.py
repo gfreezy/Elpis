@@ -11,3 +11,6 @@ MAIL_PASSWORD = 'qwertyuiop'
 DEFAULT_MAIL_SENDER = ('elpis', 'gfreezy@163.com')
 
 SECRET_KEY = 'sfd23r0jIOJDS89)(UI90'
+
+ADMIN = 'admin'
+PASS = 'elpis.admin'

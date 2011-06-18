@@ -3,9 +3,9 @@ import time
 import config
 
 from flask import Flask
-from flaskext.gravatar import Gravatar
 from flaskext import themes
 from flaskext.admin import Admin
+from flaskext.gravatar import Gravatar
 from flaskext.sqlalchemy import SQLAlchemy
 
 # create our little application :)
@@ -42,12 +42,18 @@ gravatar = Gravatar(app, size=100, rating='g', default='retro',
 
 
 db = SQLAlchemy(app)
-from elpis import model
-admin_mod = Admin(app, model, db.session,
+from elpis import models
+
+from elpis.frontend.view import frontend
+app.register_module(frontend)
+
+from elpis.admin.view import login_required, admin as admin_view
+app.register_module(admin_view, url_prefix='/admin')
+
+admin_mod = Admin(app, models, db.session,
+                  theme='auth',
+                  view_decorator=login_required,
                   exclude_pks=True)
 
 themes.setup_themes(app)
 app.register_module(admin_mod, url_prefix='/admin')
-
-from elpis.views.frontend import frontend
-app.register_module(frontend)

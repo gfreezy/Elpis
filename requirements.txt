@@ -2,5 +2,6 @@ flask
 Flask-Gravatar
 postmarkup
 Flask-SQLAlchemy
+Flask-Admin
 mailer
 celery
