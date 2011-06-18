@@ -3,5 +3,7 @@ Flask-Gravatar
 postmarkup
 Flask-SQLAlchemy
 Flask-Admin
+Flask-themes
+Flask-WTF
 mailer
 celery
