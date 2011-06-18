@@ -5,14 +5,13 @@
 
 {% block main %}
     <form method="POST" action="">
-      <div>
-        <label for="username">username</label>
-        <input id="username" name="username" type="text" value="">
-      </div>
-      <div>
-        <label for="password">password</label>
-        <input id="passsword" name="password" type="password" value="">
-      </div>
-      <input type="submit"/>
+      <dl>
+          <dt><label for="username"><strong>username</strong></label>
+          <dt><input id="username" name="username" type="text" value="">
+          <dt><label for="password"><strong>password</strong></label>
+          <dt><input id="passsword" name="password" type="password" value="">
+      </dl>
+      <br>
+      <input type="submit" value="submit" />
     </form>
 {% endblock main %}
