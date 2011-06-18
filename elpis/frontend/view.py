@@ -2,7 +2,6 @@
 import mailer
 
 from flask import Module, g, render_template, request, redirect, url_for
-from postmarkup import render_bbcode
 from elpis.models import db, Entry, Comment, Receiver
 from celery.execute import send_task
 
@@ -76,7 +75,7 @@ def show_entries():
 def add_entry():
     if request.method == 'POST':
         entry = Entry(
-                render_bbcode(request.form['text'], "UTF-8"),
+                request.form['text'],
                 request.form['author'],
                 request.form['mail'])
 
@@ -110,7 +109,7 @@ def view(id):
     current_page('view')
     if request.method == 'POST':
         comment = Comment(
-                render_bbcode(request.form['text'], "UTF-8"),
+                request.form['text'],
                 id, 
                 request.form['author'],
                 request.form['mail'])

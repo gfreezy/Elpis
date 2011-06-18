@@ -4,79 +4,78 @@ Elpis-View
 {% endblock %}
 {% block content %}
 <article class=group>
-<section>
-<img src="{{ entry.mail|gravatar }}">
-</section>
+    <section>
+        <img src="{{ entry.mail|gravatar }}">
+    </section>
 
-<section>
-<span>
-    {{ entry.content|safe }}
-</span>
-</section>
+    <section>
+        <span>
+            {{ entry.content|markdown }}
+        </span>
+    </section>
 
-<footer>
-<p>submitted {{ entry.time|format_time }} by 
-<span>
-    <a href=mailto:{{entry.mail}}>
-        <em>{{ entry.author }}</em>
-    </a>
-</span>
-</p>
-<p>
-<a href="#">share</a>
-<a href="{{ url_for('del_entry', id=entry.id) }}">delete</a>
-</p>
-</footer>
+    <footer>
+        <p>submitted {{ entry.time|format_time }} by 
+        <span>
+            <a href=mailto:{{entry.mail}}>
+                <em>{{ entry.author }}</em>
+            </a>
+        </span>
+        </p>
+        <p>
+        <a href="#">share</a>
+        <a href="{{ url_for('del_entry', id=entry.id) }}">delete</a>
+        </p>
+    </footer>
 
 
 
-<section>
-{% for comment in comments %}
-<article class=group>
-<section>
-<img src="{{ comment.mail|gravatar }}">
-</section>
+    <section>
+        {% for comment in comments %}
+        <article class=group>
+            <section>
+                <img src="{{ comment.mail|gravatar }}">
+            </section>
 
-<section>
-<span>
-    {{ comment.content|safe }}
-</span>
-</section>
+            <section>
+                <span>
+                    {{ comment.content|markdown }}
+                </span>
+            </section>
 
-<footer>
-<p>submitted {{ comment.time|format_time }} by 
-<span>
-    <a href=mailto:{{ comment.mail }}>
-        <em>{{ comment.author }}</em>
-    </a>
-</span>
-</p>
-<p>
-<a href="#">share</a>
-<a href="{{ url_for('del_comment', entry_id=entry.id, id=comment.id) }}">delete</a>
-</p>
-</footer>
-</article>
-{% endfor %}
-</section>
+            <footer>
+                <p>submitted {{ comment.time|format_time }} by 
+                <span>
+                    <a href=mailto:{{ comment.mail }}>
+                        <em>{{ comment.author }}</em>
+                    </a>
+                </span>
+                </p>
+                <p>
+                <a href="#">share</a>
+                <a href="{{ url_for('del_comment', entry_id=entry.id, id=comment.id) }}">delete</a>
+                </p>
+            </footer>
+        </article>
+        {% endfor %}
+    </section>
 </article>
 
 <div id=add_comment>
     <div></div>
-<form action={{ url_for('view', id=entry.id) }} method=post>
-    <fieldset>
-        <!--<label for=text>Text (BBCode supported)</label>-->
-        <textarea name=text class=":required"></textarea>
-    </fieldset>
-    <fieldset>
-        <label for=author>Name</label>
-        <input type=text name=author class=":required">
-    </fieldset>
-    <fieldset>
-        <label for=mail>Mail</label>
-        <input type=text name=mail class=":required :email">
-    </fieldset>
-    <input type=submit value=Submit class=submit>
-</form>
+    <form action={{ url_for('view', id=entry.id) }} method=post>
+        <fieldset>
+            <textarea name=text class=":required"></textarea>
+        </fieldset>
+        <fieldset>
+            <label for=author>Name</label>
+            <input type=text name=author class=":required">
+        </fieldset>
+        <fieldset>
+            <label for=mail>Mail</label>
+            <input type=text name=mail class=":required :email">
+        </fieldset>
+        <input type=submit value=Submit class=submit>
+    </form>
 </div>
 {% endblock %}

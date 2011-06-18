@@ -7,6 +7,7 @@ from flaskext import themes
 from flaskext.admin import Admin
 from flaskext.gravatar import Gravatar
 from flaskext.sqlalchemy import SQLAlchemy
+from flaskext.markdown import Markdown
 
 # create our little application :)
 app = Flask(__name__)
@@ -37,6 +38,7 @@ def format_time(t):
         return 'at %s' % time.strftime('%a %b %d %H:%M:%S', struct_t)
 
 
+Markdown(app)
 gravatar = Gravatar(app, size=100, rating='g', default='retro',
         force_default=False, force_lower=False)
 

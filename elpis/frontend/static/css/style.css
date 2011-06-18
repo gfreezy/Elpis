@@ -2,7 +2,7 @@
     /*border: 1px solid black;*/
 /*}*/
 
-nav, ul, li, div, h1, h2, p, span, fieldset,
+nav, h1, h2, h3, ul, li, div, p, span, fieldset,
 header, section, nav, footer, figure, figcaption, 
 address, table, tr, td {
     margin: 0;
