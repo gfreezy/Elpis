@@ -1,3 +1,4 @@
 #!/bin/sh
 ln -s elpis/static static
+ln -s elpis.db elpis/static/pict/
 #crontab mylittlecrontab

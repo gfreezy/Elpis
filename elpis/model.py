@@ -3,8 +3,6 @@ import time
 import random
 
 from elpis import db
-
-
 def get_token(): #获得随机字符串
     return ''.join(random.sample([chr(i) for i in range(48, 123)], 12))
 
@@ -18,11 +16,11 @@ class Entry(db.Model):
     comments_count = db.Column(db.Integer)
     token = db.Column(db.String(12))
 
-    def __init__(self, content, author, mail):
+    def __init__(self, content=None, author=None, mail=None):
         self.content = content
         self.author = author
         self.mail = mail
-        self.time = time.time()
+        self.time = int(time.time())
         self.comments_count = 0
         self.token = get_token()
 
@@ -39,12 +37,12 @@ class Comment(db.Model):
     time = db.Column(db.Integer)
     token = db.Column(db.String(12))
 
-    def __init__(self, content, entry_id, author, mail):
+    def __init__(self, content=None, entry_id=None, author=None, mail=None):
         self.content = content
         self.entry_id = entry_id
         self.author = author
         self.mail = mail
-        self.time = time.time()
+        self.time = int(time.time())
         self.token = get_token()
 
     def __repr__(self):
@@ -58,12 +56,13 @@ class Receiver(db.Model):
     time = db.Column(db.Integer)
     token = db.Column(db.String(12))
 
-    def __init__(self, mail, phone):
+    def __init__(self, mail=None, phone=None):
         self.mail = mail
         self.phone = phone
-        self.time = time.time()
+        self.time = int(time.time())
         self.token = get_token()
 
     def __repr__(self):
         return '<Receiver %d>' % self.id
+
 

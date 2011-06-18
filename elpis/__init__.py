@@ -4,12 +4,13 @@ import config
 
 from flask import Flask
 from flaskext.gravatar import Gravatar
+from flaskext import themes
+from flaskext.admin import Admin
 from flaskext.sqlalchemy import SQLAlchemy
 
 # create our little application :)
 app = Flask(__name__)
 app.config.from_object(config)
-
 
 @app.template_filter()
 def format_time(t):
@@ -38,8 +39,15 @@ def format_time(t):
 
 gravatar = Gravatar(app, size=100, rating='g', default='retro',
         force_default=False, force_lower=False)
-db = SQLAlchemy(app)
 
+
+db = SQLAlchemy(app)
+from elpis import model
+admin_mod = Admin(app, model, db.session,
+                  exclude_pks=True)
+
+themes.setup_themes(app)
+app.register_module(admin_mod, url_prefix='/admin')
 
 from elpis.views.frontend import frontend
 app.register_module(frontend)

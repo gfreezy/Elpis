@@ -3,11 +3,12 @@ import mailer
 
 from flask import Module, g, render_template, request, redirect, url_for
 from postmarkup import render_bbcode
-from elpis import db
-from elpis.model import Entry, Comment, Receiver
+from elpis.model import db, Entry, Comment, Receiver
 from celery.execute import send_task
 
+
 frontend = Module(__name__)
+
 
 def request_deletion(entity_type, id, entry_id=None):
     if entity_type == 'entry':
@@ -22,7 +23,8 @@ def request_deletion(entity_type, id, entry_id=None):
     else:
         return 'Error'
 
-    msg = mailer.Message()
+
+    msg = mailer.Message(charset='utf-8')
     msg.From = 'gfreezy@163.com'
     msg.To = entity.mail
     msg.Subject = 'Confirm: Do you want to delete the %s?' % entity_type
@@ -30,14 +32,38 @@ def request_deletion(entity_type, id, entry_id=None):
     """<h1>If you want to delete the %s, Click the link below</h1>
     <a href="%s">%s</a>
     """ % (entity_type, url, url)
-    send_task("tasks.mail.send_mail",[msg,])
+    send_task('tasks.mail.send_mail',[msg,])
 
     return 'Check your mailbox "%s"' % entity.mail
+
+
+def inform_new_comment(entry, comment):
+    msg = mailer.Message(charset='utf-8')
+    msg.From = 'gfreezy@163.com'
+    msg.To = entry.mail
+    msg.Subject = 'Your post @Elpis has a new comment'
+    msg.Html = """
+    <strong>Comment:</strong>
+        <em>
+        <p>"%s"</p>
+        </em>
+        <p>by <a href="mailto:%s">%s</a> at <a href=%s>%s</a></p>
+    <br>
+    <br>
+    <strong>Your post:</strong>
+        <p><em>"%s"</em></p>
+    """ % (comment.content, comment.mail, comment.author, 
+           url_for('view', id=entry.id, _external=True),
+           url_for('view', id=entry.id, _external=True), 
+           entry.content)
+    send_task('tasks.mail.send_mail', [msg])
+
 
 def current_page(current):
     g.nav = dict()
     g.nav['home'] = g.nav['add'] = g.nav['view'] = g.nav['receivers'] = False
     g.nav[current] = True
+
 
 @frontend.route('/')
 @frontend.route('/view/')
@@ -45,6 +71,7 @@ def show_entries():
     current_page('home')
     entries = Entry.query.order_by('id desc').all()
     return render_template('show_entries.html', entries=entries)
+
 
 @frontend.route('/add/', methods=['POST', 'GET'])
 def add_entry():
@@ -60,6 +87,7 @@ def add_entry():
     else:
         current_page('add')
         return render_template('add_entry.html')
+
 
 @frontend.route('/del_entry/<id>/')
 @frontend.route('/del_entry/<id>/<token>')
@@ -77,6 +105,7 @@ def del_entry(id, token=None):
             db.session.commit()
         return redirect(url_for('show_entries'))
 
+
 @frontend.route('/view/<id>/', methods=['POST', 'GET'])
 def view(id):
     current_page('view')
@@ -84,7 +113,7 @@ def view(id):
         comment = Comment(
                 render_bbcode(request.form['text'], "UTF-8"),
                 id, 
-                request.form['author'], 
+                request.form['author'],
                 request.form['mail'])
 
         entry = Entry.query.get(id)
@@ -93,10 +122,12 @@ def view(id):
         db.session.add(comment)
         db.session.add(entry)
         db.session.commit()
+        inform_new_comment(entry, comment)
 
     entry = Entry.query.get(id)
     comments = Comment.query.filter_by(entry_id=id)
     return render_template('view.html', entry=entry, comments=comments)
+
 
 @frontend.route('/del_comment/<entry_id>/<id>/')
 @frontend.route('/del_comment/<entry_id>/<id>/<token>/')
@@ -114,10 +145,12 @@ def del_comment(entry_id=None, id=None, token=None):
             db.session.commit()
         return redirect(url_for('view', id=id))
 
+
 @frontend.route('/about/')
 def about():
     current_page('about')
     return render_template('about.html')
+
 
 @frontend.route('/receivers/', methods=['POST', 'GET'])
 def receivers():
@@ -134,6 +167,7 @@ def receivers():
     receivers = Receiver.query.order_by('id desc').all()
     return render_template('receivers.html', receivers=receivers)
 
+
 @frontend.route('/del_receiver/<id>/')
 @frontend.route('/del_receiver/<id>/<token>/')
 def del_receiver(id, token=None):
@@ -145,15 +179,4 @@ def del_receiver(id, token=None):
             db.session.delete(receiver)
             db.session.commit()
         return redirect(url_for('receivers'))
-
-
-#@frontend.route('/manage/')
-#@frontend.route('/manage/<user>/<passwd>')
-#def manage(user=None, passwd=None):
-    #if user == 'admin' and passwd == 'admin':
-        #receivers = Receiver.query.order_by('id desc').all()
-        #return render_template('manage.html', receivers=receivers)
-    #else:
-        #return 'username and password needed'
-
 

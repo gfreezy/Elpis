@@ -1,10 +1,17 @@
-#BROKER_BACKEND = "sqlakombu.transport.Transport"
-#BROKER_HOST = "sqlite:////tmp/celerydb.sqlite"
+import platform
 
-#CELERY_RESULT_DBURI = "sqlite:////tmp/celerydb.sqlite"
+if platform.node() == 'Norida':
+	DEBUG = True
+else:
+	DEBUG = False
 
-BROKER_HOST = "rabbitmq.elpis.dotcloud.com"
-BROKER_PORT = 6216
-BROKER_USER = "root"
-BROKER_PASSWORD = "lV>RIWwuJm]]YqD!%WiI"
-CELERY_RESULT_BACKEND = "amqp"
+if DEBUG:
+	BROKER_BACKEND = "sqlakombu.transport.Transport"
+	BROKER_HOST = "sqlite:////tmp/celerydb.sqlite"
+	CELERY_RESULT_DBURI = "sqlite:////tmp/celerydb.sqlite"
+else:
+	BROKER_HOST = "rabbitmq.elpis.dotcloud.com"
+	BROKER_PORT = 6216
+	BROKER_USER = "root"
+	BROKER_PASSWORD = "lV>RIWwuJm]]YqD!%WiI"
+	CELERY_RESULT_BACKEND = "amqp"
