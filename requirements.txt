@@ -2,7 +2,7 @@ flask
 Flask-Gravatar
 postmarkup
 Flask-SQLAlchemy
-Flask-Admin
+-e git://github.com/wilsaj/flask-admin.git#egg=Flask_Admin
 Flask-themes
 Flask-WTF
 mailer
