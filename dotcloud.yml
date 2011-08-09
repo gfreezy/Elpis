@@ -1,5 +1,4 @@
 www:
-    approot: elpis
     type: python
 data:
     type: mongodb
